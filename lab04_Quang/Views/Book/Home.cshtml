@@ -1,0 +1,139 @@
+﻿@model PagedList.IPagedList<lab04_Quang.Models.book>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<section class="content">
+    <div class="container-fluid">
+        <h2 style="text-align: center; color:blue; font-family: ahkio; font-size: 50px">HOME</h2>
+        <hr />
+
+        <div class="row">
+
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <div class="panel panel-default main">
+                        <div class="panel panel-heading">
+                            <div class="row sub-title">
+                                <p style="font-size: 20px; font-weight: 500;">
+                                    <strong>Title: </strong>
+                                    <i style="font-family: ahkio; color:darkgoldenrod; ">@item.book_name</i>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <p><strong>Price: $</strong>@item.price</p>
+                            <p><strong>Date Update: </strong>@item.update_date</p>
+                            <p><strong>Quantity in stock: </strong>@item.quantity_instock</p>
+                            <p><img src="/@item.image" alt="hinh thumnail" /></p>
+                        </div>
+                        <div class="panel-footer clearfix">
+                            <div class="pull-right">
+                                <a href="@Url.Action("AddCart", "Cart", new {@id = item.book_id, @strURL = Request.Url.ToString()})"
+                                   style="text-decoration: none;" class="btn btn-primary btn-sm">Order</a>
+                                @Html.ActionLink("Read more ...", "Detail", new { id = item.book_id },
+        new { @class = "btn btn-warning btn-sm " })
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <br />
+                </div>
+            }
+
+        </div>
+
+    </div>
+</section>
+
+<div class="row">
+    <div class="col-6-md-6 col-lg-6 col-xs-6 col-sm-6">
+        @using (Html.BeginForm("Home", "Book", FormMethod.Get))
+        {
+            <p>
+                Size of page:@Html.DropDownList("size", (List<SelectListItem>)ViewBag.size, new { @onchange = "this.form.submit();" })
+            </p>
+        }
+    </div>
+    <div class="col-6-md-6 col-lg-6 col-xs-6 col-sm-6 text-right">
+        Page: @(Model.PageCount<Model.PageNumber? 0:Model.PageNumber) / @Model.PageCount
+    </div>
+</div>
+@Html.PagedListPager(Model, page => Url.Action("Home", new { page, size = ViewBag.currentSize }))
+
+
+<style>
+
+
+    .Menu li {
+        display: inline;
+        font-size: 10px;
+    }
+
+    .main {
+        text-align: center;
+        width: 100%;
+        height: 763px;
+        display: block;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+
+    .sub-title {
+        width: 100%;
+        margin-left: 0;
+        background-color: #e4d2d2;
+    }
+
+
+    .no-underline {
+        text-decoration: none;
+        display: inline;
+    }
+</style>
+<style type="text/css">
+    #mau-nut a {
+        clear: both;
+        background-color: orange;
+        color: snow;
+    }
+
+        #mau-nut a:hover {
+            background-color: darkcyan;
+            color: snow;
+        }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var maxLength = 100;
+        $(".show-read-more").each(function () {
+            var myStr = $(this).text();
+            if ($.trim(myStr).length > maxLength) {
+                var newStr = myStr.substring(0, maxLength);
+                var removedStr = myStr.substring(maxLength, $.trim(myStr).length);
+                $(this).empty().html(newStr);
+                $(this).append(' <a href="javascript:void(0);" class="read-more">read continue...</a > ');
+                $(this).append('<span class="more-text">' + removedStr + '</span>');
+            }
+        });
+        $(".read-more").click(function () {
+            $(this).siblings(".more-text").contents().unwrap();
+            $(this).remove();
+        });
+    });
+</script>
+<style>
+    .show-read-more .more-text {
+        display: none;
+    }
+</style>
+
+
+

@@ -1,0 +1,30 @@
+﻿@model IEnumerable<lab04_Quang.Models.SumSaleQuantity>
+@{
+    ViewBag.Title = "StatisticBook";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Statistic of Safe Book Quantity</h2>
+<table class="table">
+    <tr>
+        <th><strong>Book Name</strong></th>
+        <th><strong>Sale Quantity</strong></th>
+    </tr>
+    @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.bookname)</td>
+                    <td>
+                        @if(item.sumQuantity == null)
+                {
+                            <label style="font-weight: normal;">0</label>
+                        }
+                        else
+                {
+                    @item.sumQuantity
+                }
+                    </td>
+
+                </tr>    
+            }
+</table>

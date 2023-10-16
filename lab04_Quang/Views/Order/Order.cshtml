@@ -1,0 +1,51 @@
+﻿@model IEnumerable<lab04_Quang.Models.Order>
+
+@{
+    ViewBag.Title = "Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Order</h2>
+<table class="table">
+    <tr>
+        <th><strong>#</strong></th>
+        <th><strong>Order ID</strong></th>
+        <th><strong>Customer ID</strong></th>
+        <th><strong>Customer Name</strong></th>
+        <th><strong>Order date</strong></th>
+        <th><strong>Delivery date</strong></th>
+        <th><strong>Is ship</strong></th>
+        <th><strong>Is payment</strong></th>
+        <th><strong>Total</strong></th>
+        <th><strong></strong></th>
+
+
+    </tr>
+   <tbody>
+       @if(Model != null && Model.Any())
+       {
+           var i = 1;
+           foreach(var item in Model)
+                {
+                    <tr>
+                        <td>@i</td>
+                        <td>@item.orderID</td>
+                        <td>@item.customerID</td>
+                        <td>@item.customerName</td>
+                        <td>@item.orderDate</td>
+                        <td>@item.deliveryDate</td>
+                        <td>@(item.isShip == true ? "true" : "false")</td>
+                        <td>@(item.isPayment == true ? "true" : "false")</td>
+                        <td>@item.total.ToString()</td>
+                        <td>
+                            @Html.ActionLink("Detail", "Detail", "Order", new { id = item.orderID }, new { @class = "btn btn-primary btn-sm" })
+                        </td>
+
+
+                    </tr>
+               i++;
+           }
+       }
+   </tbody>
+</table>
+

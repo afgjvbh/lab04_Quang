@@ -1,0 +1,39 @@
+﻿@model lab04_Quang.Models.orderdetail
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Detail</h2>
+
+<table class="table">
+    <tr>
+        <th><strong>#</strong></th>
+        <th><strong>Order ID</strong></th>
+        <th><strong>Book ID</strong></th>
+        <th><strong>Book Name</strong></th>
+        <th><strong>Quantity</strong></th>
+        <th><strong>Price</strong></th>
+        <th><strong>Total for Book</strong></th>
+
+
+    </tr>
+    <tbody>
+        <tr>
+            <td></td>
+            <td>@Html.DisplayFor(model => model.order_id)</td>
+            <td>@Html.DisplayFor(model => model.book_id)</td>
+            <td>@ViewBag.BookName</td>
+
+            <td>@Html.DisplayFor(model => model.quantity)</td>
+            <td>@Html.DisplayFor(model => model.price)</td>
+            <td></td>
+
+        </tr>
+    </tbody>
+</table>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
